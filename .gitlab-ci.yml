@@ -1,0 +1,20 @@
+stages:
+  - build
+  - test
+
+build_jar:
+  stage: build
+  image: maven:3.9.5-eclipse-temurin-21
+  script:
+    - mvn clean install
+  artifacts:
+    name: "mon-app-java"
+    paths:
+      - target/demo-0.0.1-SNAPSHOT.jar
+    expire_in: 1 week
+
+tests:
+  stage: test
+  image: maven:3.9.5-eclipse-temurin-21
+  script:
+    - mvn test
