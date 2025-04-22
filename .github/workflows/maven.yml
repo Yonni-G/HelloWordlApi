@@ -19,3 +19,12 @@ jobs:
 
       - name: 🛠️ Build avec Maven
         run: mvn clean install
+              
+      - name: Passage de tests
+        run: mvn test
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mon-app-java
+          path: target/demo-0.0.1-SNAPSHOT.jar
