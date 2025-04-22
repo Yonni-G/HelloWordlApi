@@ -19,3 +19,7 @@ jobs:
 
       - name: 🛠️ Build avec Maven
         run: mvn clean install
+      
+      - name: Passage de tests
+        run: mvn test
+        
