@@ -1,7 +1,7 @@
 name: Mon YAML de tests
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,12 +19,31 @@ jobs:
 
       - name: 🛠️ Build avec Maven
         run: mvn clean install
-              
-      - name: Passage de tests
-        run: mvn test
 
-      - name: Upload JAR artifact
+      - name: 📦 Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: mon-app-java
           path: target/demo-0.0.1-SNAPSHOT.jar
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v3
+
+      - name: ☕️ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: 📦 Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mon-app-java
+
+      - name: 🔬 Run tests
+        run: mvn test
