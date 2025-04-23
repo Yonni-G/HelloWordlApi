@@ -1,4 +1,4 @@
-name: Simple Maven Build
+name: Mon YAML de tests
 
 on:
   workflow_dispatch: 
