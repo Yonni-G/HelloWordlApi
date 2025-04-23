@@ -1,12 +1,11 @@
-name: Mon YAML de tests
+name: Mon YAML de CI avec Docker
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Permet de lancer le pipeline manuellement
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: 📥 Checkout du code
         uses: actions/checkout@v3
@@ -28,8 +27,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: build
-
+    needs: build  # Ce job ne s'exécute que si 'build' réussit
     steps:
       - name: 📥 Checkout du code
         uses: actions/checkout@v3
@@ -47,3 +45,19 @@ jobs:
 
       - name: 🔬 Run tests
         run: mvn test
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: test  # Ce job ne s'exécute que si 'test' réussit
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v3
+
+      - name: 🐳 Build Docker image
+        run: |
+          docker build -t mon-app-java .
+          docker tag mon-app-java mon-registry/mon-app-java:latest
+          
+      - name: 🛠️ Push Docker image
+        run: |
+          docker push mon-registry/mon-app-java:latest
