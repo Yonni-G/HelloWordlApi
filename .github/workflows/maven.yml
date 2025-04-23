@@ -56,8 +56,8 @@ jobs:
       - name: 🐳 Build Docker image
         run: |
           docker build -t mon-app-java .
-          docker tag mon-app-java mon-registry/mon-app-java:latest
+          docker tag mon-app-java yonni44/mon-app-java:latest
           
       - name: 🛠️ Push Docker image
         run: |
-          docker push mon-registry/mon-app-java:latest
+          docker push yonni44/mon-app-java:latest
