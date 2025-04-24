@@ -15,7 +15,8 @@ jobs:
     name: CI (develop & feature/*)
     runs-on: ubuntu-latest
     needs: build
-    if: > # À compléter : develop ou feature/*
+    if: >
+      github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/feature/')
     steps:
       - name: Simuler CI
         run: echo "✅ CI exécutée pour ${{ github.ref }}"
